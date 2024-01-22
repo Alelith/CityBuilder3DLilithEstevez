@@ -21,6 +21,8 @@ public class BuildingPlacement : MonoBehaviour
 
     private float lastUpdateTime;
 
+    private float tempSpeedFactor;
+
     private PlayerInputActions action;
 
     private Vector3 curIndicatorPos;
@@ -77,17 +79,21 @@ public class BuildingPlacement : MonoBehaviour
     /// <param name="preset">The preset thet will be instantiated</param>
     public void OnBeginNewPlacement (BuildingPreset preset)
     {
-        if (!isBulldozering && !isPlacing)
-        {
-            isPlacing = true;
+        tempSpeedFactor = City.Instance.SpeedFactor;
+        City.Instance.SpeedFactor = 0;
 
-            curPreset = preset;
-            placementIndicator.GetComponentInChildren<MeshFilter>().mesh = preset.Prefab.GetComponentInChildren<MeshFilter>().sharedMesh;
-            placementIndicator.GetComponentInChildren<Transform>().localScale = preset.Prefab.transform.GetChild(0).localScale;
-            placementIndicator.SetActive(true);
+        if (isPlacing)
+            OnCancelPlacement();
+        else if (isBulldozering)
+            OnToggleBullozer();
+        isPlacing = true;
 
-            placementIndicator.transform.position = new Vector3(0, -99, 0);
-        }
+        curPreset = preset;
+        placementIndicator.GetComponentInChildren<MeshFilter>().mesh = preset.Prefab.GetComponentInChildren<MeshFilter>().sharedMesh;
+        placementIndicator.GetComponentInChildren<Transform>().localScale = preset.Prefab.transform.GetChild(0).localScale;
+        placementIndicator.SetActive(true);
+
+        placementIndicator.transform.position = new Vector3(0, -99, 0);
     }
 
     /// <summary>
@@ -95,6 +101,8 @@ public class BuildingPlacement : MonoBehaviour
     /// </summary>
     private void OnCancelPlacement()
     {
+        City.Instance.SpeedFactor = tempSpeedFactor;
+
         if (isPlacing)
         {
             isPlacing = false;
@@ -115,12 +123,13 @@ public class BuildingPlacement : MonoBehaviour
     /// </summary>
     public void OnToggleBullozer()
     {
-        if (!isPlacing)
+        if (isPlacing)
         {
-            isBulldozering = !isBulldozering;
-            bulldozerIndicator.transform.position = isBulldozering ? new(0, -99, 0) : new Vector3(0, 0.5f, 0);
-            bulldozerIndicator.SetActive(isBulldozering);
+            OnCancelPlacement();
         }
+        isBulldozering = !isBulldozering;
+        bulldozerIndicator.transform.position = isBulldozering ? new(0, -99, 0) : new Vector3(0, 0.5f, 0);
+        bulldozerIndicator.SetActive(isBulldozering);
     }
 
     private void OnRotateBuilding()
@@ -134,12 +143,13 @@ public class BuildingPlacement : MonoBehaviour
         if (!EventSystem.current.IsPointerOverGameObject())
         {
             Building existingBuilding = City.Instance.Buildings.Find(x => x.transform.position == curIndicatorPos);
-            if (isPlacing && placementIndicator.transform.position.y >= 0 && existingBuilding == null)
+            Building existingLifeCell = City.Instance.LifeCells.Find(x => x.transform.position == curIndicatorPos);
+            if (isPlacing && placementIndicator.transform.position.y >= 0 && existingBuilding == null && curPreset.Type != BuildingType.LifeCell)
                 City.Instance.OnPlaceBuilding(Instantiate(curPreset.Prefab, placementIndicator.transform.position, placementIndicator.transform.rotation).GetComponent<Building>());
+            else if (isPlacing && placementIndicator.transform.position.y >= 0 && existingLifeCell == null && curPreset.Type == BuildingType.LifeCell)
+                City.Instance.OnPlaceLifeCell(Instantiate(curPreset.Prefab, placementIndicator.transform.position, placementIndicator.transform.rotation).GetComponent<Building>());
             else if (isBulldozering && existingBuilding != null)
                 City.Instance.OnRemoveBuilding(existingBuilding);
         }
-
-        
     }
 }

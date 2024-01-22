@@ -17,5 +17,6 @@ MonoBehaviour:
   population: 5
   jobs: 0
   food: 0
+  lifeCells: 0
   prefab: {fileID: 7330864007013187834, guid: 7489503d0e18783409bccb46f9b0f3eb, type: 3}
-  prefabMesh: {fileID: -4085542598650377539, guid: 8485df9a49310f948984b862938cf748, type: 3}
+  type: 1

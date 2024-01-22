@@ -35,7 +35,7 @@ public class Selector : MonoBehaviour
         {
             Vector3 newPos = ray.GetPoint(rayOut);
 
-            return new Vector3(Mathf.CeilToInt(newPos.x) - 0.5f, 0, Mathf.CeilToInt(newPos.z) - 0.5f);
+            return new Vector3(Mathf.CeilToInt(newPos.x) - 0.5f, 0.001f, Mathf.CeilToInt(newPos.z) - 0.5f);
         }
 
         return new Vector3(0, -99, 0);

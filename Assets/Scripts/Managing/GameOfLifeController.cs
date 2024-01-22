@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class GameOfLifeController : MonoBehaviour
 {
@@ -16,13 +17,15 @@ public class GameOfLifeController : MonoBehaviour
     private GameObject cellPrefab;
     [SerializeField]
     private float updateDelay = 1f;
+    [SerializeField]
+    private bool instantiateAtStart;
 
     private float time;
 
     private Dictionary<Vector3, bool> cells = new();
     private readonly Dictionary<Vector3, GameObject> activeCells = new();
 
-    public GameOfLifeController Instance { get; private set; }
+    public static GameOfLifeController Instance { get; private set; }
 
     private void Awake()
     {
@@ -31,12 +34,13 @@ public class GameOfLifeController : MonoBehaviour
 
     private void Start()
     {
-        InitializeCells();
+        if(instantiateAtStart)
+            InitializeCells();
     }
 
     private void Update()
     {
-        time += Time.deltaTime;
+        time += Time.deltaTime * City.Instance.SpeedFactor;
         if (time >= updateDelay) 
         {
             UpdateCells();
@@ -56,7 +60,10 @@ public class GameOfLifeController : MonoBehaviour
 
                 GameObject cell = isAlive ? Instantiate(cellPrefab, position, Quaternion.identity) : null;
                 if (cell != null)
+                {
                     activeCells.Add(cell.transform.position, cell);
+                    City.Instance.OnInicializeLifeCell(cell.GetComponent<Building>());
+                }
             }
         }
     }
@@ -73,23 +80,21 @@ public class GameOfLifeController : MonoBehaviour
             int aliveNeighbors = CountAliveNeighbors(position);
 
             if (isAlive && (aliveNeighbors < 2 || aliveNeighbors > 3))
-            {
                 isAlive = false;
-            }
             else if (!isAlive && aliveNeighbors == 3)
-            {
                 isAlive = true;
-            }
 
             newCells.Add(position, isAlive);
 
             if (!activeCells.ContainsKey(position) && isAlive)
             {
                 GameObject cellInstance = Instantiate(cellPrefab, position, Quaternion.identity);
+                City.Instance.OnInicializeLifeCell(cellInstance.GetComponent<Building>());
                 activeCells.Add(position, cellInstance);
             } 
             else if (activeCells.ContainsKey(position) && !isAlive) 
             {
+                City.Instance.OnUpdateLifeCell(activeCells[position].GetComponent<Building>());
                 Destroy(activeCells[position]);
                 activeCells.Remove(position);
             }
@@ -107,19 +112,21 @@ public class GameOfLifeController : MonoBehaviour
             for (float z = position.z - 1; z <= position.z + 1; z += 1)
             {
                 if (x == position.x && z == position.z)
-                {
                     continue;
-                }
 
                 Vector3 neighborPosition = new(x, 0.001f, z);
 
                 if (cells.ContainsKey(neighborPosition) && cells[neighborPosition])
-                {
                     count++;
-                }
             }
         }
 
         return count;
+    }
+
+    public void AddNewLifeCell(GameObject building)
+    {
+        cells[building.transform.position] = true;
+        activeCells.Add(building.transform.position, building);
     }
 }

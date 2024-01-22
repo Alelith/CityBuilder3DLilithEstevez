@@ -17,9 +17,13 @@ public class BuildingPreset : ScriptableObject
     private int jobs;
     [SerializeField]
     private int food;
+    [SerializeField]
+    private int lifeCells;
     [Header("Prefab")]
     [SerializeField]
     private GameObject prefab;
+    [SerializeField]
+    private BuildingType type;
 
     public int Cost { get => cost; set => cost = value; }
     public int CostPerTurn { get => costPerTurn; set => costPerTurn = value; }
@@ -27,4 +31,12 @@ public class BuildingPreset : ScriptableObject
     public int Jobs { get => jobs; set => jobs = value; }
     public int Food { get => food; set => food = value; }
     public GameObject Prefab { get => prefab; set => prefab = value; }
+    public BuildingType Type { get => type; set => type = value; }
+    public int LifeCells { get => lifeCells; set => lifeCells = value; }
+}
+
+public enum BuildingType
+{
+    LifeCell,
+    Building
 }
