@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 98214495e079ac54d8e97c4fee380bf4, type: 3}
+  m_Name: Munchromm
+  m_EditorClassIdentifier: 
+  cost: 50
+  costPerTurn: 10
+  elf: 0
+  fairy: 0
+  food: 50
+  lifeCells: 0
+  prefab: {fileID: 4207334816979120989, guid: 80af8a09611b97144b9ea40f7ef5f596, type: 3}
+  type: 1

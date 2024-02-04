@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEditor.Presets;
 using UnityEngine;
+using UnityEngine.AI;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 
@@ -62,12 +63,12 @@ public class BuildingPlacement : MonoBehaviour
                 if (hovered != null)
                 {
                     bulldozerIndicator.GetComponentInChildren<MeshFilter>().mesh = hovered.GetComponentInChildren<MeshFilter>().sharedMesh;
-                    bulldozerIndicator.GetComponentInChildren<Transform>().localScale = hovered.transform.GetChild(0).localScale * 1.0001f;
+                    bulldozerIndicator.GetComponentInChildren<Transform>().localScale = hovered.transform.GetChild(0).localScale * 1.01f;
                 }
                 else
                 {
                     bulldozerIndicator.GetComponentInChildren<MeshFilter>().mesh = originalMesh;
-                    bulldozerIndicator.GetComponentInChildren<Transform>().localScale = new(0.1f, 0.1f, 0.1f);
+                    bulldozerIndicator.GetComponentInChildren<Transform>().localScale = new(1, 1, 1);
                 }
             }
         }
