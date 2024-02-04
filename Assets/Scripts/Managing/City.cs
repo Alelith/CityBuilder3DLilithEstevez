@@ -176,7 +176,7 @@ public class City : MonoBehaviour
         UpdateStats();
     }
 
-    private void UpdateStats() => statsText.text = string.Format("Day: {0}\t\tMana: {1}\nElfs: {2}/{3}\tFairies: {4}/{5}\nFood: {6}\t\tLife Cells: {7}", new object[] { day, mana, curElfs, maxElfs, curFairies, maxFairies, curFood, lifeCellsAvailable });
+    private void UpdateStats() => statsText.text = string.Format("Day: {0}\t\tMana: {1}\nElfs: {2}/{3}\t\tFairies: {4}/{5}\nFood: {6}\t\tLife Cells: {7}", new object[] { day, mana, curElfs, maxElfs, curFairies, maxFairies, curFood, lifeCellsAvailable });
 
     public void ModifyDaySpeed(int factor) => speedFactor = factor;
 
