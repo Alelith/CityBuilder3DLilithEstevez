@@ -4918,7 +4918,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 8280159270924963861, guid: da12d6cc0b89e5e4598e0e1bea96dd92, type: 2}
   m_audioClip: {fileID: 8300000, guid: 6e82487ffe5aab140a31a33b9f57f12a, type: 3}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
   Loop: 1
@@ -5177,7 +5177,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   audioSource: {fileID: 7127649012588621286}
-  fadeTime: 0.5
+  stopDistance: 0.001
 --- !u!1 &6373925906758368202
 GameObject:
   m_ObjectHideFlags: 0

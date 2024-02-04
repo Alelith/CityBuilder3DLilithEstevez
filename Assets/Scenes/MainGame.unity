@@ -3327,7 +3327,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 0.5019608}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.5019608}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -4602,7 +4602,6 @@ GameObject:
   - component: {fileID: 963194228}
   - component: {fileID: 963194227}
   - component: {fileID: 963194226}
-  - component: {fileID: 963194229}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -4684,27 +4683,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 163536436}
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
---- !u!135 &963194229
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 963194225}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Radius: 0.5
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1001 &972009016
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -8859,7 +8837,7 @@ MonoBehaviour:
         m_MethodName: OnBeginNewPlacement
         m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 11400000, guid: ba2a571856864a7479f41d6eb91a0e7c, type: 2}
+          m_ObjectArgument: {fileID: 11400000, guid: cf8ccfb70ec82a041b48bd7480807918, type: 2}
           m_ObjectArgumentAssemblyTypeName: BuildingPreset, Assembly-CSharp
           m_IntArgument: 0
           m_FloatArgument: 0

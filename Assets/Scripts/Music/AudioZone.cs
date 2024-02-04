@@ -7,30 +7,30 @@ public class AudioZone : MonoBehaviour
     [SerializeField]
     private AudioSource audioSource;
     [SerializeField]
-    private float fadeTime;
-    private float targetVolume;
+    private float stopDistance;
 
-    private void Start()
+    private Transform player;
+    private float defaultVolume;
+
+    // Start is called before the first frame update
+    void Start()
     {
-        targetVolume = 0.0f;
-        audioSource.volume = 0.0f;
+        defaultVolume = audioSource.volume;
+        player = Camera.main.transform;
     }
 
-    private void Update()
+    // Update is called once per frame
+    void Update()
     {
-        // transition over time to the target volume
-        audioSource.volume = Mathf.MoveTowards(audioSource.volume, targetVolume, (1.0f / fadeTime) * Time.deltaTime);
-    }
+        if (player == null)
+            return;
 
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.CompareTag("MainCamera"))
-            targetVolume = 1.0f;
-    }
+        // distance from us to the player
+        float dist = Vector3.Distance(transform.position, player.position);
 
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.CompareTag("MainCamera"))
-            targetVolume = 0.0f;
+        if (dist > stopDistance)
+            audioSource.volume = defaultVolume;
+        else
+            audioSource.volume = 0.0f;
     }
 }

@@ -1,11 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
-using UnityEditor.Presets;
 using UnityEngine;
-using UnityEngine.AI;
 using UnityEngine.EventSystems;
-using UnityEngine.InputSystem;
 
 public class BuildingPlacement : MonoBehaviour
 {
@@ -80,7 +76,8 @@ public class BuildingPlacement : MonoBehaviour
     /// <param name="preset">The preset thet will be instantiated</param>
     public void OnBeginNewPlacement (BuildingPreset preset)
     {
-        tempSpeedFactor = City.Instance.SpeedFactor;
+        if (tempSpeedFactor == 0)
+            tempSpeedFactor = City.Instance.SpeedFactor;
         City.Instance.SpeedFactor = 0;
 
         if (isPlacing)
